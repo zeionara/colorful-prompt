@@ -1,6 +1,8 @@
 # Colorful prompt
 
-This project allows you to set up a better prompt which is more beatiful than the default one and provides you more information about your environment.
+Project that allows you to set up a better prompt which arguably is more beatiful than the default one and provides you more information about your environment.
+
+![example of the new prompt look](example.jpg)
 
 # Installation
 
