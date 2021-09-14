@@ -45,7 +45,7 @@ function timer_start {
 
 function timer_stop {
   timer_show=$(($(date +%s%N) - $timer))
-  timer_show=$(lua $HOME/stringify-time.lua $timer_show)
+  timer_show=$(lua $HOME/colorful-prompt/stringify-time.lua $timer_show)
   timer_show=${timer_show::-1}
   unset timer
 }
