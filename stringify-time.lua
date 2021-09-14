@@ -1,7 +1,14 @@
 size = arg[1]
 
 function round(number)
-    return math.floor(number + 0.5 - (number + 0.5) % 1)
+    rounded_number = math.floor(number + 0.5 - (number + 0.5) % 1)
+    if rounded_number >= 1000 and rounded_number < 1000000 then
+        return round(rounded_number / 1000) .. "K"
+    end
+    if rounded_number >= 1000000 then
+        return round(rounded_number / 1000000) .. "M"
+    end
+    return rounded_number
 end
 
 function as_string(size, suffix)
@@ -28,6 +35,6 @@ n_months, n_years_ = split_size(n_months_, 12)
 n_years, n_centuries = split_size(n_years_, 100)
 
 string = as_string(n_centuries, 'c') .. as_string(n_years, 'Y') .. as_string(n_months, 'M') .. as_string(n_days, 'd') ..
-    as_string(n_hours, 'h') .. as_string(n_minutes, 'm') .. as_string(n_seconds, 's') .. as_string(n_nanoseconds, 'n')
+    as_string(n_hours, 'h') .. as_string(n_minutes, 'm') .. as_string(n_seconds, 's') .. as_string(n_nanoseconds, 'n'):gsub('Kn', 'μ'):gsub('Mn', 'l')
 
 print(string)

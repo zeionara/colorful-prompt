@@ -58,4 +58,13 @@ else
   PROMPT_COMMAND="$PROMPT_COMMAND; timer_stop"
 fi
 
-export PS1="$PS1_TIME$PS1_CONDA$PS1_USER$PS1_DIR$PS1_BRANCH$PS1_TIMER: "
+# generate_ps1() {
+#     echo $PS1_TIME$PS1_CONDA$PS1_USER$PS1_DIR$PS1_BRANCH$PS1_TIMER
+# }
+n_cols=$(tput cols)
+if [ "$n_cols" -le "100" ]; then
+    # echo small
+    export PS1="$PS1_TIME$PS1_CONDA$PS1_USER$PS1_DIR"
+else
+    export PS1="$PS1_TIME$PS1_CONDA$PS1_USER$PS1_DIR$PS1_BRANCH$PS1_TIMER"
+fi
