@@ -7,6 +7,16 @@ Project that allows you to set up a better prompt which arguably is more beatifu
 
 # Installation
 
+## Default
+
+To perform a basic installation execute the following command on a target machine:
+
+```sh
+curl -Ls http://bit.ly/setup-colorful-prompt | bash
+```
+
+## Step-by-step
+
 The script mainly relies on the `lua` interpreter and `git` tool, so they both must be installed in your system for the new prompt to work. 
 
 Also it is of the major importance to **disable the default conda environment name output** using the following command:
