@@ -22,4 +22,6 @@ git clone https://github.com/zeionara/colorful-prompt.git $HOME/colorful-prompt 
 
 echo 'updating bashrc...'
 
-echo -e '\nsource $HOME/colorful-prompt/colorful-prompt.sh\n' >> ~/.bashrc
+echo -e '\nsource $HOME/colorful-prompt/colorful-prompt.sh\n' >> ~/.bashrc || quit 'cannot ubdate .bashrc'
+
+echo 'finished installing colorful-prompt'
