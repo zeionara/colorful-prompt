@@ -13,7 +13,7 @@ quit () {
 install_lua () {
     echo 'installing lua...'
     sudo apt-get update
-    sudo apt-get install lua$lua_version | quit 'cannot install lua'
+    sudo apt-get install lua$lua_version || quit 'cannot install lua'
 }
 
 lua -v || install_lua || exit 1
