@@ -16,7 +16,7 @@ install_lua () {
     sudo apt-get install lua$lua_version | quit 'cannot install lua'
 }
 
-lua -v | install_lua
+lua -v || install_lua || exit 1
 
 echo 'cloning repo...'
 
