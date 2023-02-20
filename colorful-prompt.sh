@@ -64,7 +64,15 @@ fi
 n_cols=$(tput cols)
 if [ "$n_cols" -le "100" ]; then
     # echo small
-    export PS1="$PS1_TIME$PS1_CONDA$PS1_USER$PS1_DIR: "
+    if [[ -z $CONDA_DEFAULT_ENV ]]; then
+        export PS1="$PS1_TIME$PS1_USER$PS1_DIR: "
+    else
+        export PS1="$PS1_TIME$PS1_CONDA$PS1_USER$PS1_DIR: "
+    fi
 else
-    export PS1="$PS1_TIME$PS1_CONDA$PS1_USER$PS1_DIR$PS1_BRANCH$PS1_TIMER: "
+    if [[ -z $CONDA_DEFAULT_ENV ]]; then
+        export PS1="$PS1_TIME$PS1_USER$PS1_DIR$PS1_BRANCH$PS1_TIMER: "
+    else
+        export PS1="$PS1_TIME$PS1_CONDA$PS1_USER$PS1_DIR$PS1_BRANCH$PS1_TIMER: "
+    fi
 fi
