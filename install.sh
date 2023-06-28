@@ -33,6 +33,8 @@ install_lua () {
     sudo apt-get install lua$lua_version || quit 'cannot install lua'
 }
 
+echo '🏁 Installing colorful-prompt. Checking if lua is already installed...'
+
 if test -z $(which lua); then
     install_lua
 else
