@@ -3,7 +3,7 @@
 # to install colorful-prompt using this script execute the following command on target machine:
 # curl https://bit.ly/setup-colorful-prompt -s | bash 
 
-lua_version=${LUA_VERSION:-5.4}
+lua_version=${LUA_VERSION:-5.3}
 
 bashrc_root="$HOME/bashrc"
 
