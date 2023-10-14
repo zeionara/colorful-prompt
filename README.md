@@ -2,6 +2,8 @@
 
 Project that allows you to set up a better prompt which arguably is more beatiful than the default one and provides you more information about your environment.
 
+**Supports both - bash and zsh** (in zsh only default theme is supported so far)
+
 ![example of the new prompt look](example.jpg)
 ![examples of currently available themes](themes.jpg)
 
@@ -30,4 +32,3 @@ Finally, to enable the new look you need to update your `.bashrc` configuration 
 ```sh
 source $HOME/colorful-prompt/colorful-prompt.sh sunset
 ```
-

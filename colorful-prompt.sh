@@ -43,25 +43,39 @@ PS1_BRANCH=$(get_prompt_part "\$(parse_git_branch)" '' $BASE_COLOR)
 
 BASE_COLOR=${scheme_colors[5]}
 
-PS1_TIMER=$(get_prompt_part "  \$timer_show" '' $BASE_COLOR)
+PS1_TIMER=$(get_prompt_part " \$timer_show" '' $BASE_COLOR)
 
-function timer_start {
+preexec () {
   timer=${timer:-$(date +%s%N)}
 }
 
-function timer_stop {
+precmd () {
+  if [[ -z "$BUFFER" ]] && [[ "$timer_show" ]]; then
+      unset timer_show
+  fi
+  
+  if [ -z "$timer" ]; then
+    return
+  fi
+
   timer_show=$(($(date +%s%N) - $timer))
   timer_show=$(lua $HOME/colorful-prompt/stringify-time.lua $timer_show)
-  timer_show=${timer_show::-1}
+  if [ -z "$ZSH" ]; then
+      timer_show=${timer_show::-1}
+  else
+      timer_show=${timer_show[1,-2]}
+  fi
   unset timer
 }
 
-trap 'timer_start' DEBUG
+if [ -z "$ZSH" ]; then
+    trap 'preexec' DEBUG
+fi
 
-if [ "$PROMPT_COMMAND" == "" ]; then
-  PROMPT_COMMAND="timer_stop"
+if [ -z "$PROMPT_COMMAND" ]; then
+  PROMPT_COMMAND="precmd"
 else
-  PROMPT_COMMAND="$PROMPT_COMMAND; timer_stop"
+  PROMPT_COMMAND="$PROMPT_COMMAND; precmd"
 fi
 
 # generate_ps1() {
@@ -82,3 +96,12 @@ else
         export PS1="$PS1_TIME$PS1_CONDA$PS1_USER$PS1_DIR$PS1_BRANCH$PS1_TIMER: "
     fi
 fi
+
+# %B%F{77}\$CONDA_DEFAULT_ENV%{$reset_color%} \
+export PROMPT="\
+%B%F{41}%D{%H:%M:%S}%{$reset_color%} \
+%B%F{113}\$CONDA_DEFAULT_ENV%{$reset_color%} \
+%B%F{149}%n@%m%{$reset_color%} \
+%B%F{185}%~%{$reset_color%} \
+%B%F{221}\$(parse_git_branch)%{$reset_color%}: "
+export RPROMPT="%B%F{221}\$timer_show%{$reset_color%}"
