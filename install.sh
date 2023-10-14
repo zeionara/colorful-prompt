@@ -1,29 +1,52 @@
 #!/bin/bash
 
 # to install colorful-prompt using this script execute the following command on target machine:
-# curl https://raw.githubusercontent.com/zeionara/colorful-prompt/master/install.sh -s | bash 
+# curl https://bit.ly/setup-colorful-prompt -s | bash 
 
-lua_version=${LUA_VERSION:-5.4}
+lua_version=${LUA_VERSION:-5.3}
+
+bashrc_root="$HOME/bashrc"
 
 quit () {
     echo $1
     exit 1
 }
 
+echop () {
+    echo "🚩 $@"
+}
+
+patch_bashrc () {
+    if test -d "$bashrc_root"; then
+        echo -e "$1" >> $bashrc_root/etc/main.sh || quit 'Cannot update bashrc'
+    else
+        echo -e "$1" >> $HOME/.bashrc || quit 'Cannot update bashrc'
+    fi
+
+    . $HOME/.bashrc
+}
+
 install_lua () {
-    echo 'installing lua...'
+    echop 'Installing lua...'
+
     sudo apt-get update
     sudo apt-get install lua$lua_version || quit 'cannot install lua'
 }
 
-lua -v || install_lua || exit 1
+echo '🏁 Installing colorful-prompt. Checking if lua is already installed...'
 
-echo 'cloning repo...'
+if test -z $(which lua); then
+    install_lua
+else
+    echop 'Found an existing lua installation'
+fi
 
-git clone https://github.com/zeionara/colorful-prompt.git $HOME/colorful-prompt || quit 'cannot clone repo'
+echop 'Cloning colorful-prompt repo...'
 
-echo 'updating bashrc...'
+git clone https://github.com/zeionara/colorful-prompt.git "$HOME/colorful-prompt" || quit 'Cannot clone colorful-prompt repo'
 
-echo -e '\nsource $HOME/colorful-prompt/colorful-prompt.sh\n' >> ~/.bashrc || quit 'cannot ubdate .bashrc'
+echop 'Updating bashrc...'
 
-echo 'finished installing colorful-prompt'
+patch_bashrc '\n. $HOME/colorful-prompt/colorful-prompt.sh\n'
+
+echop 'Finished installing colorful-prompt'
