@@ -10,7 +10,7 @@ parse_git_branch() {
     if [ -z $branch ]; then
         echo ''
     else
-        echo " $branch ($prefix $n_modified) "
+        echo " $branch $prefix $n_modified "
     fi
 }
 
@@ -99,9 +99,10 @@ fi
 
 # %B%F{77}\$CONDA_DEFAULT_ENV%{$reset_color%} \
 export PROMPT="\
-%B%F{41}%D{%H:%M:%S}%{$reset_color%} \
-%B%F{113}\$CONDA_DEFAULT_ENV%{$reset_color%} \
-%B%F{149}%n@%m%{$reset_color%} \
-%B%F{185}%~%{$reset_color%} \
-%B%F{221}\$(parse_git_branch)%{$reset_color%}: "
-export RPROMPT="%B%F{221}\$timer_show%{$reset_color%}"
+%B%F{41}%D{%H:%M:%S}%f \
+%F{113}\$CONDA_DEFAULT_ENV%f \
+%F{149}%n@%m%f \
+%F{185}%~%f \
+%F{221}\$(parse_git_branch)%f\
+%F{226}:%f "
+export RPROMPT="%B%F{221}\$timer_show%f"
