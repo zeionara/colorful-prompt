@@ -104,5 +104,5 @@ export PROMPT="\
 %F{149}%n@%m%f \
 %F{185}%~%f \
 %F{221}\$(parse_git_branch)%f\
-%F{226}:%f "
-export RPROMPT="%B%F{221}\$timer_show%f"
+%F{226}:%f%b "
+export RPROMPT="%B%F{221}\$timer_show%f%b"
