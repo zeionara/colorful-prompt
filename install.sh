@@ -29,13 +29,18 @@ patch_bashrc () {
 install_lua () {
     echop 'Installing lua...'
 
-    sudo apt-get update
-    sudo apt-get install lua$lua_version || quit 'cannot install lua'
+    if test -z $(which pacman 2> /dev/null); then
+        sudo pacman -Syu
+        sudo pacman -S lua
+    else
+        sudo apt-get update
+        sudo apt-get install lua$lua_version || quit 'cannot install lua'
+    fi
 }
 
 echo '🏁 Installing colorful-prompt. Checking if lua is already installed...'
 
-if test -z $(which lua); then
+if test -z $(which lua 2> /dev/null); then
     install_lua
 else
     echop 'Found an existing lua installation'
