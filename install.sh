@@ -23,13 +23,13 @@ patch_bashrc () {
 install_lua () {
   echop 'Installing lua...'
 
-  if test ! -z $(which pacman 2> /dev/null); then
+  if test $(which pacman 2> /dev/null); then
     sudo pacman -Syu
     sudo pacman -S lua
-  elif test ! -z $(which apt-get 2> /dev/null); then
+  elif test $(which apt-get 2> /dev/null); then
     sudo apt-get update
     sudo apt-get install lua$lua_version || quit 'cannot install lua'
-  elif test ! -z $(which emerge 2> /dev/null); then
+  elif test $(which emerge 2> /dev/null); then
     sudo emerge --ask dev-lang/lua
   else
     quit "Can't install lua"
