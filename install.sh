@@ -5,37 +5,35 @@
 
 lua_version=${LUA_VERSION:-5.3}
 
-bashrc_root="$HOME/bashrc"
-
 quit () {
-    echo $1
-    exit 1
+  echo $1
+  exit 1
 }
 
 echop () {
-    echo "🚩 $@"
+  echo "🚩 $@"
 }
 
 patch_bashrc () {
-    if test -d "$bashrc_root"; then
-        echo -e "$1" >> $bashrc_root/etc/main.sh || quit 'Cannot update bashrc'
-    else
-        echo -e "$1" >> $HOME/.bashrc || quit 'Cannot update bashrc'
-    fi
+  echo -e "$1" >> $HOME/.bashrc || quit 'Cannot update bashrc'
 
-    . $HOME/.bashrc
+  . $HOME/.bashrc
 }
 
 install_lua () {
-    echop 'Installing lua...'
+  echop 'Installing lua...'
 
-    if test -z $(which pacman 2> /dev/null); then
-        sudo pacman -Syu
-        sudo pacman -S lua
-    else
-        sudo apt-get update
-        sudo apt-get install lua$lua_version || quit 'cannot install lua'
-    fi
+  if test ! -z $(which pacman 2> /dev/null); then
+    sudo pacman -Syu
+    sudo pacman -S lua
+  elif test ! -z $(which apt-get 2> /dev/null); then
+    sudo apt-get update
+    sudo apt-get install lua$lua_version || quit 'cannot install lua'
+  elif test ! -z $(which emerge 2> /dev/null); then
+    sudo emerge --ask dev-lang/lua
+  else
+    quit "Can't install lua"
+  fi
 }
 
 echo '🏁 Installing colorful-prompt. Checking if lua is already installed...'
